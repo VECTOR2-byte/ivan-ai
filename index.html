@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IVAN AI 3.0</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: radial-gradient(circle, #071a32, #02060d 75%);
+    color: #00aaff;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    min-height: 100vh;
+}
+
+header {
+    padding: 25px 10px;
+    font-size: 32px;
+    font-weight: bold;
+    letter-spacing: 6px;
+    text-shadow: 0 0 20px #008cff;
+}
+
+.subtitle {
+    color: #729fbd;
+    font-size: 10px;
+    letter-spacing: 3px;
+}
+
+.core {
+    width: 170px;
+    height: 170px;
+    margin: 45px auto 25px;
+    border-radius: 50%;
+    border: 3px solid #008cff;
+    box-shadow: 0 0 25px #008cff,
+                inset 0 0 30px #008cff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pulse 2s infinite;
+}
+
+.core span {
+    font-size: 35px;
+    font-weight: bold;
+}
+
+@keyframes pulse {
+    50% {
+        box-shadow: 0 0 55px #008cff,
+                    inset 0 0 45px #008cff;
+    }
+}
+
+#status {
+    margin: 20px;
+    color: #70cfff;
+    letter-spacing: 2px;
+    font-size: 12px;
+}
+
+.panel {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #005b99;
+    background: rgba(0,40,80,0.25);
+    border-radius: 12px;
+}
+
+#response {
+    color: #d5efff;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    text-align: left;
+    overflow-wrap: anywhere;
+}
+
+input {
+    width: 65%;
+    padding: 14px;
+    background: #06172a;
+    border: 1px solid #008cff;
+    border-radius: 20px;
+    color: white;
+    outline: none;
+}
+
+button {
+    background: #001a33;
+    color: #00aaff;
+    border: 2px solid #008cff;
+    padding: 13px;
+    border-radius: 20px;
+    box-shadow: 0 0 12px #008cff;
+    margin: 5px;
+}
+
+.mic {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    font-size: 28px;
+    margin: 20px;
+}
+
+footer {
+    color: #386987;
+    font-size: 10px;
+    padding: 25px;
+}
+</style>
+</head>
+
+<body>
+
+<header>IVAN</header>
+
+<div class="subtitle">
+INTERNAL VECTOR ACTIVATED NAVIGATOR
+</div>
+
+<div class="core">
+    <span>IVAN</span>
+</div>
+
+<div id="status">SYSTEM ONLINE</div>
+
+<div>
+    <input
+        id="message"
+        type="text"
+        placeholder="Talk to IVAN..."
+    >
+    <button onclick="sendMessage()">SEND</button>
+</div>
+
+<button class="mic" onclick="activateIVAN()">🎙️</button>
+
+<div class="panel">
+    <p>IVAN ARTIFICIAL INTELLIGENCE</p>
+    <p id="response">Hello Vector. IVAN is ready.</p>
+</div>
+
+<footer>
+IVAN TECHNOLOGY SYSTEMS | VERSION 3.0
+</footer>
+
+<script>
+
+const IVAN_SERVER =
+"https://ivan-ai-brain.vectorvvalentino.workers.dev/";
+
+const statusBox = document.getElementById("status");
+const responseBox = document.getElementById("response");
+const messageBox = document.getElementById("message");
+
+  // IVAN PERSONAL MEMORY SYSTEM
+
+function saveMemory(information) {
+
+    let memories = JSON.parse(
+        localStorage.getItem("ivan_memories") || "[]"
+    );
+
+    memories.push(information);
+
+    localStorage.setItem(
+        "ivan_memories",
+        JSON.stringify(memories)
+    );
+
+    return "I have saved that information in my memory.";
+}
+
+function getMemories() {
+
+    let memories = JSON.parse(
+        localStorage.getItem("ivan_memories") || "[]"
+    );
+
+    if (memories.length === 0) {
+        return "My memory is currently empty.";
+    }
+
+    return "Here is what I remember:\n" +
+        memories.map((item, index) =>
+            (index + 1) + ". " + item
+        ).join("\n");
+}
+
+function clearMemories() {
+
+    localStorage.removeItem("ivan_memories");
+
+    return "My saved memories have been cleared.";
+}
+
+function memoryCommand(message) {
+
+    const command = message.toLowerCase().trim();
+
+    if (command.startsWith("remember that ")) {
+        return saveMemory(message.substring(14).trim());
+    }
+
+    if (command === "what do you remember" ||
+        command === "show my memories") {
+        return getMemories();
+    }
+
+    if (command === "forget everything") {
+        return clearMemories();
+    }
+
+    return null;
+  }
+
+// IVAN OFFLINE INTELLIGENCE
+
+function offlineCommand(message) {
+
+    const command = message.toLowerCase().trim();
+
+    if (command.includes("hello ivan") ||
+        command === "hello") {
+        return "Hello Vector. IVAN is online and ready.";
+    }
+
+    if (command.includes("who are you")) {
+        return "I am IVAN, Internal Vector Activated Navigator.";
+    }
+
+    if (command.includes("who created you")) {
+        return "I was created by Vector 2. I was designed and created by VECTOR2 ON 19th October 2026 on his 18th BIRTHDAY. He named me IVAN which stands for INTERNAL VECTOR ACTIVATED NAVIGATOR. He created me because he was so lonely and he decided to create me as a Digital friend.";
+    }
+
+    if (command.includes("what time is it")) {
+        return "The current time is " +
+            new Date().toLocaleTimeString();
+    }
+
+    if (command.includes("today's date") ||
+        command.includes("what is the date")) {
+        return "Today's date is " +
+            new Date().toLocaleDateString();
+    }
+
+    if (command.includes("are you online")) {
+        return "My local systems are operational. My AI connection needs API credits.";
+    }
+
+    return null;
+}
+
+// MAIN MESSAGE SYSTEM
+
+async function sendMessage(text) {
+
+    const message = (text || messageBox.value).trim();
+
+  // CHECK PERSONAL MEMORY
+
+const memoryReply = memoryCommand(message);
+
+if (memoryReply) {
+
+    responseBox.textContent =
+        "You: " + message +
+        "\n\nIVAN: " + memoryReply;
+
+    statusBox.textContent = "MEMORY SYSTEM ACTIVE";
+
+    speak(memoryReply);
+
+    return;
+}
+
+    if (!message) return;
+
+    messageBox.value = "";
+
+    // CHECK OFFLINE COMMANDS FIRST
+
+    const offlineReply = offlineCommand(message);
+
+    if (offlineReply) {
+
+        responseBox.textContent =
+            "You: " + message +
+            "\n\nIVAN: " + offlineReply;
+
+        statusBox.textContent = "OFFLINE MODE";
+
+        speak(offlineReply);
+
+        return;
+    }
+
+    // CONNECT TO ONLINE AI
+
+    responseBox.textContent =
+        "You: " + message +
+        "\n\nIVAN is thinking...";
+
+    statusBox.textContent = "PROCESSING COMMAND";
+
+    try {
+
+        const result = await fetch(IVAN_SERVER, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                message: message
+            })
+        });
+
+        const data = await result.json();
+
+        if (!result.ok) {
+            throw new Error(data.error || "AI connection failed");
+        }
+
+        const answer = data.reply;
+
+        if (!answer) {
+            throw new Error("IVAN returned an empty response");
+        }
+
+        responseBox.textContent =
+            "You: " + message +
+            "\n\nIVAN: " + answer;
+
+        statusBox.textContent = "IVAN ONLINE";
+
+        speak(answer);
+
+    } catch (error) {
+
+        statusBox.textContent = "AI CONNECTION UNAVAILABLE";
+
+        responseBox.textContent =
+            "IVAN: " + error.message;
+
+    }
+}
+
+// SAMSUNG VOICE OUTPUT
+
+function speak(text) {
+
+    if (!("speechSynthesis" in window)) return;
+
+    speechSynthesis.cancel();
+
+    const voice = new SpeechSynthesisUtterance(text);
+
+    voice.lang = "en-US";
+    voice.rate = 1;
+    voice.pitch = 1;
+
+    speechSynthesis.speak(voice);
+}
+
+// MICROPHONE SYSTEM
+
+function activateIVAN() {
+
+    const Recognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+    if (!Recognition) {
+
+        statusBox.textContent = "VOICE NOT SUPPORTED";
+
+        responseBox.textContent =
+            "Please use Google Chrome for voice recognition.";
+
+        return;
+    }
+
+    const recognition = new Recognition();
+
+    recognition.lang = "en-US";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    statusBox.textContent = "LISTENING...";
+
+    recognition.onresult = function(event) {
+
+        const command =
+            event.results[0][0].transcript;
+
+        sendMessage(command);
+    };
+
+    recognition.onerror = function() {
+
+        statusBox.textContent = "VOICE ERROR";
+
+        responseBox.textContent =
+            "Check your microphone permission and try again.";
+
+    };
+
+    recognition.onend = function() {
+
+        if (statusBox.textContent === "LISTENING...") {
+            statusBox.textContent = "IVAN ONLINE";
+        }
+
+    };
+
+    recognition.start();
+}
+
+// ENTER KEY SUPPORT
+
+messageBox.addEventListener("keydown", function(event) {
+
+    if (event.key === "Enter") {
+        sendMessage();
+    }
+
+});
+
+</script>
+
+</body>
+</html>
